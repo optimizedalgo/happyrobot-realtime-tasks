@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: HappyRobot Collaborative Tasks API
+  version: 2.0.0
+servers:
+  - url: https://happyrobot-realtime-tasks.vercel.app
+    description: Production
+  - url: http://localhost:8080
+    description: Local development
+paths:
+  /health:
+    get:
+      summary: API and database health
+      responses:
+        '200': {description: Healthy}
+        '503': {description: Database unavailable}
+  /api/projects:
+    get:
+      summary: Lightweight project catalog snapshot
+      description: Metadata is intentionally omitted from list items. Response includes syncCursor for project catalog realtime handoff.
+      responses:
+        '200': {description: Project summaries and sync cursor}
+    post:
+      summary: Create project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/CreateProject'}
+      responses:
+        '201': {description: Project created}
+  /api/projects/{projectId}:
+    parameters:
+      - {$ref: '#/components/parameters/ProjectId'}
+    get:
+      summary: Fetch full project detail including metadata
+      responses:
+        '200': {description: Full project}
+        '404': {description: Not found}
+    patch:
+      summary: Versioned project update
+      description: Requires the version currently held by the caller. Stale writes return 409 and the authoritative current project.
+      responses:
+        '200': {description: Updated project}
+        '409': {description: Version conflict}
+  /api/projects/{projectId}/tasks:
+    parameters:
+      - {$ref: '#/components/parameters/ProjectId'}
+    get:
+      summary: Cursor-paginated task snapshot or task-title search
+      parameters:
+        - {in: query, name: cursor, schema: {type: string}}
+        - {in: query, name: limit, schema: {type: integer, minimum: 1, maximum: 250, default: 100}}
+        - {in: query, name: status, schema: {type: string, enum: [todo, in_progress, blocked, done]}}
+        - {in: query, name: search, description: Case-insensitive task-title search, schema: {type: string}}
+      responses:
+        '200': {description: Tasks plus nextCursor and syncCursor}
+    post:
+      summary: Create task
+      responses:
+        '201': {description: Created task}
+        '400': {description: Invalid input or dependency}
+        '409': {description: Domain conflict}
+  /api/tasks/{taskId}:
+    parameters:
+      - {$ref: '#/components/parameters/TaskId'}
+    patch:
+      summary: Versioned task update
+      description: Validates status transitions, same-project dependencies, cycles, dependency completion, and optimistic version.
+      responses:
+        '200': {description: Updated task}
+        '409': {description: Version or domain conflict}
+    delete:
+      summary: Delete task
+      responses:
+        '204': {description: Deleted}
+        '409': {description: Referenced dependency cannot be deleted}
+  /api/tasks/{taskId}/comments:
+    parameters:
+      - {$ref: '#/components/parameters/TaskId'}
+    get:
+      summary: List comments
+      responses:
+        '200': {description: Ordered comments}
+    post:
+      summary: Add comment
+      responses:
+        '201': {description: Created comment}
+  /api/events:
+    get:
+      summary: Project-scoped SSE stream
+      description: Replays canonical event_log rows after lastEventId then continues live. EventSource reconnects safely.
+      parameters:
+        - {in: query, name: projectId, required: true, schema: {type: string, format: uuid}}
+        - {in: query, name: lastEventId, schema: {type: integer, format: int64}}
+      responses:
+        '200': {description: text/event-stream}
+  /api/project-events:
+    get:
+      summary: Project-catalog SSE stream
+      parameters:
+        - {in: query, name: lastEventId, schema: {type: integer, format: int64}}
+      responses:
+        '200': {description: text/event-stream}
+  /api/event-deltas:
+    get:
+      summary: Durable JSON event replay/polling fallback
+      description: Supply projectId for task/comment/project events inside one project, or scope=projects for project catalog events.
+      parameters:
+        - {in: query, name: projectId, schema: {type: string, format: uuid}}
+        - {in: query, name: scope, schema: {type: string, enum: [projects]}}
+        - {in: query, name: after, schema: {type: integer, format: int64, default: 0}}
+        - {in: query, name: limit, schema: {type: integer, minimum: 1, maximum: 1000, default: 250}}
+      responses:
+        '200': {description: Ordered event envelopes and nextCursor}
+components:
+  parameters:
+    ProjectId:
+      in: path
+      name: projectId
+      required: true
+      schema: {type: string, format: uuid}
+    TaskId:
+      in: path
+      name: taskId
+      required: true
+      schema: {type: string, format: uuid}
+  schemas:
+    CreateProject:
+      type: object
+      required: [name]
+      properties:
+        name: {type: string}
+        description: {type: string}
+        metadata: {type: object, additionalProperties: true}
+    Project:
+      type: object
+      required: [id, name, description, metadata, version]
+      properties:
+        id: {type: string, format: uuid}
+        name: {type: string}
+        description: {type: string}
+        metadata: {type: object, additionalProperties: true}
+        version: {type: integer}
+    Task:
+      type: object
+      required: [id, projectId, title, status, assignedTo, configuration, dependencies, version]
+      properties:
+        id: {type: string, format: uuid}
+        projectId: {type: string, format: uuid}
+        title: {type: string}
+        status: {type: string, enum: [todo, in_progress, blocked, done]}
+        assignedTo: {type: array, items: {type: string}}
+        configuration:
+          type: object
+          properties:
+            priority: {type: string, enum: [low, medium, high, urgent]}
+            description: {type: string}
+            tags: {type: array, items: {type: string}}
+            customFields: {type: object, additionalProperties: true}
+        dependencies: {type: array, items: {type: string, format: uuid}}
+        version: {type: integer}

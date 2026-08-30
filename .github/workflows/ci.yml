@@ -1,0 +1,108 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: '1.23' }
+      - run: go mod download && go mod verify
+        working-directory: services/api
+      - run: go mod tidy -diff
+        working-directory: services/api
+      - run: go test ./...
+        working-directory: services/api
+      - run: go build ./cmd/server
+        working-directory: services/api
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - run: npm install
+        working-directory: apps/web
+      - run: npm run typecheck
+        working-directory: apps/web
+      - run: npm run build
+        working-directory: apps/web
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: happyrobot
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d happyrobot"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/happyrobot?sslmode=disable
+      REALTIME_DATABASE_URL: postgres://postgres:postgres@localhost:5432/happyrobot?sslmode=disable
+      PORT: 8080
+      CORS_ORIGIN: http://localhost:3000,http://127.0.0.1:3000
+      AUTO_MIGRATE: "true"
+      API_URL: http://localhost:8080
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with: { go-version: '1.23' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Start API
+        run: |
+          cd services/api
+          go run ./cmd/server > /tmp/happyrobot-api.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://localhost:8080/health >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/happyrobot-api.log
+          exit 1
+      - name: API + realtime integration tests
+        run: node scripts/smoke.mjs
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Start complete stack
+        run: docker compose up -d --build
+      - name: Wait for web
+        run: |
+          for i in {1..60}; do
+            if curl -fsS http://localhost:3000 >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          docker compose logs
+          exit 1
+      - run: npm install
+        working-directory: apps/web
+      - run: npx playwright install --with-deps chromium
+        working-directory: apps/web
+      - name: Cross-client browser tests
+        run: npm run test:e2e
+        working-directory: apps/web
+        env:
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3000
+          API_URL: http://127.0.0.1:8080
+      - if: always()
+        run: docker compose logs --no-color > docker-compose.log || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-compose-log
+          path: docker-compose.log

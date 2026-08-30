@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+    <path d="M0,0 L0,6 L9,3 z" fill="context-stroke"/>
+  </marker>
+</defs>
+<rect width="1600" height="900" fill="#ffffff"/>
+
+<text x="70" y="65" font-family="Inter,Arial,sans-serif" font-size="34" fill="#1e1e1e" font-weight="700" text-anchor="start"><tspan x="70" dy="0">HappyRobot Collaborative Task System</tspan></text>
+<text x="70" y="103" font-family="Inter,Arial,sans-serif" font-size="19" fill="#6b7280" font-weight="400" text-anchor="start"><tspan x="70" dy="0">Production architecture • realtime consistency • scalable reads</tspan></text>
+<rect x="70" y="170" width="265" height="360" rx="18" fill="#eaf2ff" stroke="#2563eb" stroke-width="2"/>
+<text x="95" y="215" font-family="Inter,Arial,sans-serif" font-size="19" fill="#2563eb" font-weight="700" text-anchor="start"><tspan x="95" dy="0">CLIENTS</tspan></text>
+<rect x="105" y="265" width="195" height="90" rx="14" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+<text x="202" y="318" font-family="Inter,Arial,sans-serif" font-size="22" fill="#1e1e1e" font-weight="600" text-anchor="middle"><tspan x="202" dy="0">Browser A</tspan></text>
+<rect x="105" y="390" width="195" height="90" rx="14" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+<text x="202" y="443" font-family="Inter,Arial,sans-serif" font-size="22" fill="#1e1e1e" font-weight="600" text-anchor="middle"><tspan x="202" dy="0">Browser B</tspan></text>
+<rect x="430" y="140" width="575" height="470" rx="18" fill="#f5f0ff" stroke="#7c3aed" stroke-width="2"/>
+<text x="455" y="185" font-family="Inter,Arial,sans-serif" font-size="19" fill="#7c3aed" font-weight="700" text-anchor="start"><tspan x="455" dy="0">VERCEL SERVICES — ONE PUBLIC ORIGIN</tspan></text>
+<rect x="480" y="245" width="205" height="180" rx="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+<text x="582" y="300" font-family="Inter,Arial,sans-serif" font-size="24" fill="#1e1e1e" font-weight="600" text-anchor="middle"><tspan x="582" dy="0">Next.js Web</tspan></text>
+<text x="582" y="340" font-family="Inter,Arial,sans-serif" font-size="17" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="582" dy="0">App Router</tspan></text>
+<text x="582" y="368" font-family="Inter,Arial,sans-serif" font-size="17" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="582" dy="0">Optimistic UI</tspan></text>
+<text x="582" y="396" font-family="Inter,Arial,sans-serif" font-size="17" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="582" dy="0">Virtualized list</tspan></text>
+<rect x="750" y="225" width="205" height="220" rx="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+<text x="852" y="280" font-family="Inter,Arial,sans-serif" font-size="24" fill="#1e1e1e" font-weight="600" text-anchor="middle"><tspan x="852" dy="0">Go API</tspan></text>
+<text x="852" y="322" font-family="Inter,Arial,sans-serif" font-size="17" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="852" dy="0">REST mutations</tspan></text>
+<text x="852" y="350" font-family="Inter,Arial,sans-serif" font-size="17" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="852" dy="0">Cursor reads</tspan></text>
+<text x="852" y="378" font-family="Inter,Arial,sans-serif" font-size="17" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="852" dy="0">SSE stream</tspan></text>
+<text x="852" y="406" font-family="Inter,Arial,sans-serif" font-size="17" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="852" dy="0">Domain rules</tspan></text>
+<rect x="785" y="485" width="145" height="70" rx="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+<text x="857" y="513" font-family="Inter,Arial,sans-serif" font-size="16" fill="#4b5563" font-weight="600" text-anchor="middle"><tspan x="857" dy="0">Scale out</tspan></text>
+<text x="857" y="537" font-family="Inter,Arial,sans-serif" font-size="16" fill="#4b5563" font-weight="600" text-anchor="middle"><tspan x="857" dy="0">API instances</tspan></text>
+<rect x="1090" y="155" width="430" height="470" rx="18" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+<text x="1120" y="200" font-family="Inter,Arial,sans-serif" font-size="20" fill="#059669" font-weight="700" text-anchor="start"><tspan x="1120" dy="0">NEON POSTGRESQL</tspan></text>
+<rect x="1130" y="250" width="350" height="110" rx="14" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+<text x="1305" y="295" font-family="Inter,Arial,sans-serif" font-size="21" fill="#1e1e1e" font-weight="600" text-anchor="middle"><tspan x="1305" dy="0">projects • tasks • comments</tspan></text>
+<text x="1305" y="329" font-family="Inter,Arial,sans-serif" font-size="16" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="1305" dy="0">versioned rows + indexes</tspan></text>
+<rect x="1130" y="395" width="350" height="90" rx="14" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+<text x="1305" y="432" font-family="Inter,Arial,sans-serif" font-size="20" fill="#1e1e1e" font-weight="600" text-anchor="middle"><tspan x="1305" dy="0">append-only event_log</tspan></text>
+<text x="1305" y="462" font-family="Inter,Arial,sans-serif" font-size="15" fill="#4b5563" font-weight="400" text-anchor="middle"><tspan x="1305" dy="0">durable replay / Last-Event-ID</tspan></text>
+<rect x="1130" y="520" width="350" height="70" rx="14" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+<text x="1305" y="563" font-family="Inter,Arial,sans-serif" font-size="19" fill="#1e1e1e" font-weight="600" text-anchor="middle"><tspan x="1305" dy="0">LISTEN / NOTIFY</tspan></text>
+<line x1="300" y1="310" x2="480" y2="310" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="315.0" y="292.0" width="150" height="25" rx="8" fill="#ffffff" opacity="0.92"/><text x="390.0" y="310.0" font-family="Inter,Arial,sans-serif" font-size="15" fill="#2563eb" font-weight="600" text-anchor="middle"><tspan x="390.0" dy="0">HTTPS</tspan></text>
+<line x1="685" y1="295" x2="750" y2="295" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="642.5" y="277.0" width="150" height="25" rx="8" fill="#ffffff" opacity="0.92"/><text x="717.5" y="295.0" font-family="Inter,Arial,sans-serif" font-size="15" fill="#7c3aed" font-weight="600" text-anchor="middle"><tspan x="717.5" dy="0">REST writes</tspan></text>
+<line x1="750" y1="380" x2="685" y2="380" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="642.5" y="362.0" width="150" height="25" rx="8" fill="#ffffff" opacity="0.92"/><text x="717.5" y="380.0" font-family="Inter,Arial,sans-serif" font-size="15" fill="#7c3aed" font-weight="600" text-anchor="middle"><tspan x="717.5" dy="0">cursor reads</tspan></text>
+<line x1="955" y1="300" x2="1130" y2="300" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="967.5" y="282.0" width="150" height="25" rx="8" fill="#ffffff" opacity="0.92"/><text x="1042.5" y="300.0" font-family="Inter,Arial,sans-serif" font-size="15" fill="#059669" font-weight="600" text-anchor="middle"><tspan x="1042.5" dy="0">SQL txns</tspan></text>
+<line x1="1130" y1="555" x2="955" y2="410" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="967.5" y="464.5" width="150" height="25" rx="8" fill="#ffffff" opacity="0.92"/><text x="1042.5" y="482.5" font-family="Inter,Arial,sans-serif" font-size="15" fill="#059669" font-weight="600" text-anchor="middle"><tspan x="1042.5" dy="0">notify</tspan></text>
+<line x1="750" y1="245" x2="300" y2="250" stroke="#d97706" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="450.0" y="229.5" width="150" height="25" rx="8" fill="#ffffff" opacity="0.92"/><text x="525.0" y="247.5" font-family="Inter,Arial,sans-serif" font-size="15" fill="#d97706" font-weight="600" text-anchor="middle"><tspan x="525.0" dy="0">SSE entity deltas</tspan></text>
+<line x1="855" y1="485" x2="855" y2="445" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="8 8" marker-end="url(#arrow)"/>
+<rect x="70" y="690" width="445" height="155" rx="18" fill="#fff7ed" stroke="#d97706" stroke-width="2"/>
+<text x="95" y="730" font-family="Inter,Arial,sans-serif" font-size="20" fill="#d97706" font-weight="700" text-anchor="start"><tspan x="95" dy="0">Consistency</tspan></text>
+<text x="95" y="770" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="95" dy="0">• If-Match / version checks</tspan></text>
+<text x="95" y="798" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="95" dy="0">• DB transactions + row locking</tspan></text>
+<text x="95" y="826" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="95" dy="0">• optimistic UI with rollback</tspan></text>
+<rect x="575" y="690" width="445" height="155" rx="18" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
+<text x="600" y="730" font-family="Inter,Arial,sans-serif" font-size="20" fill="#0f766e" font-weight="700" text-anchor="start"><tspan x="600" dy="0">Scalability</tspan></text>
+<text x="600" y="770" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="600" dy="0">• keyset/cursor pagination + indexes</tspan></text>
+<text x="600" y="798" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="600" dy="0">• virtualized task rendering</tspan></text>
+<text x="600" y="826" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="600" dy="0">• small realtime deltas, not full-project rebroadcasts</tspan></text>
+<rect x="1080" y="690" width="440" height="155" rx="18" fill="#f9fafb" stroke="#6b7280" stroke-width="2"/>
+<text x="1105" y="730" font-family="Inter,Arial,sans-serif" font-size="20" fill="#4b5563" font-weight="700" text-anchor="start"><tspan x="1105" dy="0">Security boundary</tspan></text>
+<text x="1105" y="770" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="1105" dy="0">• DB credentials stay server-side</tspan></text>
+<text x="1105" y="798" font-family="Inter,Arial,sans-serif" font-size="17" fill="#374151" font-weight="400" text-anchor="start"><tspan x="1105" dy="0">• CORS allowlist supported</tspan></text>
+<text x="1105" y="826" font-family="Inter,Arial,sans-serif" font-size="16" fill="#374151" font-weight="400" text-anchor="start"><tspan x="1105" dy="0">• auth/RBAC + distributed rate limiting: production extensions</tspan></text>
+</svg>
