@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "API: run",
+      "type": "shell",
+      "command": "go run ./cmd/server",
+      "options": {
+        "cwd": "${workspaceFolder}/services/api",
+        "env": {
+          "DATABASE_URL": "postgres://postgres:postgres@localhost:5432/happyrobot?sslmode=disable",
+          "REALTIME_DATABASE_URL": "postgres://postgres:postgres@localhost:5432/happyrobot?sslmode=disable",
+          "PORT": "8080",
+          "CORS_ORIGIN": "http://localhost:3000,http://127.0.0.1:3000",
+          "AUTO_MIGRATE": "true"
+        }
+      },
+      "problemMatcher": []
+    },
+    { "label": "Web: install", "type": "shell", "command": "npm install", "options": { "cwd": "${workspaceFolder}/apps/web" }, "problemMatcher": [] },
+    { "label": "Web: run", "type": "shell", "command": "npm run dev", "options": { "cwd": "${workspaceFolder}/apps/web", "env": { "NEXT_PUBLIC_API_URL": "http://localhost:8080" } }, "problemMatcher": [] },
+    { "label": "Docker: clean rebuild", "type": "shell", "command": "docker compose down -v --remove-orphans && docker compose build --no-cache && docker compose up", "problemMatcher": [] },
+    { "label": "Smoke: API + realtime", "type": "shell", "command": "node scripts/smoke.mjs", "problemMatcher": [] },
+    { "label": "E2E: collaboration", "type": "shell", "command": "npm run test:e2e", "options": { "cwd": "${workspaceFolder}/apps/web", "env": { "PLAYWRIGHT_BASE_URL": "http://127.0.0.1:3000", "API_URL": "http://127.0.0.1:8080" } }, "problemMatcher": [] },
+    { "label": "Load: 10k + write report", "type": "shell", "command": "WRITE_RESULTS=1 TASKS=10000 CONCURRENCY=25 node scripts/load.mjs", "problemMatcher": [] }
+  ]
+}
